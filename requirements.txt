@@ -1,0 +1,9 @@
+# For NVIDIA GPU support, install a CUDA-enabled PyTorch build using:
+# https://pytorch.org/get-started/locally/
+# CUDA is not a separate pip requirement.
+torch
+numpy
+pandas
+matplotlib
+jupyter
+ipykernel

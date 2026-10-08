@@ -30,15 +30,7 @@ Python is the programming language we will use to construct and train our neural
 1. Visit the official Python website: https://www.python.org/downloads/
 2. Download a compatible version of Python for your operating system.
 3. Run the installer and follow the installation instructions.
-4. On Windows, ensure Python is added to your system PATH if the installer offers this option.
 
-Once installed, open a terminal and enter:
-
-```bash
-python --version
-```
-
-This should display your installed Python version.
 
 ### 1.2 Jupyter Notebooks
 
@@ -54,7 +46,7 @@ For additional information, visit https://jupyter.org/.
 
 Git is a version control system that allows us to track changes to our code and save our work in repositories.
 
-Toward the end of the example, we will briefly demonstrate how to create a Git repository and upload our project to GitHub directly through the VS Code terminal.
+We will use Git to download the example repository directly to our computers.
 
 1. Visit https://git-scm.com/downloads
 2. Download Git for your operating system.
@@ -65,30 +57,6 @@ To verify the installation, enter:
 ```bash
 git --version
 ```
-
-### 1.4 Downloading the MNIST Dataset
-
-MNIST is a dataset containing grayscale images of handwritten digits from 0 through 9.
-
-For this example, we will use a small subset of MNIST to keep training times short and the code easy to understand.
-
-Download the dataset from:
-
-**[MNIST dataset download link — to be provided]**
-
-Save the downloaded file somewhere accessible on your computer. We will move it into the appropriate project folder in Section 3.
-
-### 1.5 Creating Your Project Folder
-
-Create a new folder anywhere on your computer and name it:
-
-```text
-MNIST_NeuralNet_Example_last-name-here
-```
-
-Replace `last-name-here` with your own last name.
-
-This folder will contain our Python scripts, Jupyter notebook, dataset, and saved results.
 
 ---
 
@@ -122,34 +90,60 @@ We will use both throughout the example.
 
 ---
 
-## Section 3: Setting Up the Project Files
+## Section 3: Downloading the GitHub Repository
 
-Now that the required software has been installed, we can organize our project.
+Now that the necessary software has been installed, we can download the example repository.
 
-### 3.1 Opening the Project Folder
+The repository already contains the Python scripts, Jupyter notebook, and MNIST dataset needed for the example. You do not need to create these files yourself.
 
-In VS Code:
+### 3.1 Opening the VS Code Terminal
 
-1. Select **File → Open Folder**.
-2. Navigate to the folder created in Section 1.
-3. Select `MNIST_NeuralNet_Example_last-name-here`.
-4. Click **Select Folder**.
+Open VS Code and select:
 
-Your project folder should now appear in the VS Code Explorer on the left side of the window.
+**Terminal → New Terminal**
 
-### 3.2 Creating the File Structure
+On Windows, this will typically open a PowerShell terminal.
 
-We will keep the project intentionally simple.
+You can also use the keyboard shortcut:
 
-Our neural network will be organized into two Python files and one Jupyter notebook. Separating these components makes the code easier to read, modify, and reuse.
+`Ctrl + Shift + Backtick`
 
-Create the following structure:
+### 3.2 Cloning the Repository
+
+First, navigate to the location where you would like to save the project. For example, on Windows:
+
+```powershell
+cd "$HOME\Documents"
+```
+
+Next, clone the repository from GitHub:
+
+```powershell
+git clone https://github.com/owenvisser/PHC-6099-Neural-Network-Walkthrough.git
+```
+
+Git will download the project and create a folder containing all the necessary files.
+
+### 3.3 Opening the Project in VS Code
+
+After cloning the repository, enter:
+
+```powershell
+cd PHC-6099-Neural-Network-Walkthrough
+code .
+```
+
+Alternatively, select **File → Open Folder** in VS Code and navigate to the downloaded repository.
+
+### 3.4 Understanding the File Structure
+
+Our project is intentionally organized into a small number of files:
 
 ```text
-MNIST_NeuralNet_Example_last-name-here/
+MNIST_NeuralNet_Example/
 │
 ├── data/
-│   └── [MNIST dataset file]
+│   └── mnist.pkl.gz
 │
 ├── model.py
 ├── parameters.py
@@ -159,65 +153,31 @@ MNIST_NeuralNet_Example_last-name-here/
 └── README.md
 ```
 
-The files serve the following purposes:
-
 | File | Description |
 |---|---|
-| `data/` | Contains the small MNIST dataset. |
+| `data/mnist.pkl.gz` | Contains the MNIST observations and digit labels used for training and evaluation. |
 | `model.py` | Defines the neural network architecture using PyTorch. |
 | `parameters.py` | Stores the model and training parameters. |
-| `MNIST_Example.ipynb` | Controls data loading, training, and evaluation, allowing us to execute code cell by cell. |
-| `requirements.txt` | Lists the Python packages required to reproduce the example. |
-| `.gitignore` | Identifies local files that should not be tracked by Git. |
-| `README.md` | Provides instructions and documentation for the repository. |
+| `MNIST_Example.ipynb` | Controls data loading, model training, and evaluation. |
+| `requirements.txt` | Lists the Python packages required to run the example. |
+| `.gitignore` | Specifies files and folders that should not be tracked by Git. |
+| `README.md` | Provides instructions for downloading and running the project. |
 
-### 3.3 Why Separate the Files?
+The model architecture and parameters are kept separate from the Jupyter notebook so that we can examine each part of the training procedure independently.
 
-Instead of writing all our code in a single notebook, we separate the neural network definition from the parameters and training procedure.
-
-For example, `model.py` will contain the one-hidden-layer neural network introduced in the lecture:
-
-\[
-h = g(W_1^\top x+\beta_1),
-\]
-
-\[
-\hat y = W_2^\top h+\beta_2.
-\]
-
-The notebook will import this model, load the MNIST observations, and perform training using mini-batches.
-
-This organization allows us to modify the network architecture or training parameters without rewriting the entire notebook.
+**Note:** The `results/` folder is intentionally not included in the downloaded repository. It will be created when you execute the notebook and save the results of your own neural network.
 
 ---
 
 ## Section 4: Installing the Required Python Packages
 
-Although Python and VS Code are installed, we still need several Python packages to construct and train our neural network.
+Although the repository contains the necessary code and data, we still need to install the Python packages required to execute the example.
 
-We will use PyTorch for neural network computation and Jupyter for interactive execution.
+### 4.1 Creating a Python Environment
 
-### 4.1 Opening the VS Code Terminal
+In the VS Code terminal, make sure you are inside the downloaded project folder.
 
-In VS Code, select:
-
-**Terminal → New Terminal**
-
-On Windows, the terminal will typically open PowerShell.
-
-You can also use the keyboard shortcut:
-
-`Ctrl + Shift + Backtick`
-
-The terminal should open at the bottom of VS Code.
-
-Make sure the terminal is operating within your project folder.
-
-### 4.2 Creating a Python Environment
-
-We will create a local Python environment so that the packages installed for this example are kept separate from other Python projects.
-
-Enter:
+Create a Python environment by entering:
 
 ```bash
 python -m venv .venv
@@ -235,45 +195,60 @@ On macOS or Linux, use:
 source .venv/bin/activate
 ```
 
-If PowerShell prevents activation, the environment can still be used by selecting its Python interpreter in VS Code.
+If PowerShell prevents activation, you can still use the environment by selecting its Python interpreter in VS Code.
 
-### 4.3 Installing Python Packages
+### 4.2 Installing the Packages
 
-For this example, we will need:
+We will use the following Python packages:
 
 - `torch` — neural network construction, automatic differentiation, and optimization.
 - `numpy` — numerical operations and array manipulation.
-- `pandas` — tabular data handling, if needed for the supplied MNIST file.
+- `pandas` — tabular data handling, where needed.
 - `matplotlib` — displaying handwritten digits and training results.
 - `jupyter` — executing interactive notebooks.
 - `ipykernel` — connecting the Python environment to VS Code notebooks.
 
-Create a file named `requirements.txt` and enter:
+The repository already contains a `requirements.txt` file listing the necessary packages.
 
-```text
-torch
-numpy
-pandas
-matplotlib
-jupyter
-ipykernel
-```
-
-Then install the packages using:
+To install them, enter:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-These instructions assume a standard CPU installation of PyTorch. If installation differs for your system, consult the official instructions at https://pytorch.org/get-started/locally/.
+This command installs the packages into your active Python environment.
 
-### 4.4 Selecting the Python Environment
+These instructions assume a standard CPU installation of PyTorch. However, if you are certain that your computer has a compatible NVIDIA GPU, you may install the CUDA-enabled version of PyTorch to accelerate model training.
+
+First, verify that your NVIDIA GPU and drivers support CUDA by entering the following command in the VS Code terminal:
+
+```powershell
+nvidia-smi
+```
+
+If your GPU and drivers support CUDA 13.0, you can install the corresponding CUDA-enabled version of PyTorch by entering:
+
+```powershell
+python -m pip install --upgrade --force-reinstall torch --index-url https://download.pytorch.org/whl/cu130
+```
+
+For other CUDA versions or platform-specific installation instructions, visit https://pytorch.org/get-started/locally/ and select the appropriate configuration.
+
+Once installation is complete, verify that PyTorch can access your GPU:
+
+```powershell
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+If the command returns `True`, PyTorch can access your GPU. Our Jupyter notebook will automatically use CUDA when available; otherwise, it will run on the CPU.
+
+### 4.3 Selecting the Python Environment
 
 Once installation is complete:
 
 1. Open `MNIST_Example.ipynb` in VS Code.
 2. Click **Select Kernel** in the upper-right corner.
-3. Select the Python environment associated with `.venv`.
+3. Select the **Python Environment** associated with our path, specifically `.venv\Scripts\python.exe`.
 
 This ensures that the notebook uses the packages installed for our project.
 
@@ -283,18 +258,32 @@ This ensures that the notebook uses the packages installed for our project.
 
 We are now ready to connect the mathematical concepts from the lecture to a working neural network.
 
-Our example will use a fully connected neural network with one hidden layer and a ReLU activation function, consistent with the architecture introduced in the Beamer presentation.
+Our example uses a fully connected neural network with one hidden layer and a ReLU activation function, consistent with the architecture introduced in the lecture.
 
-The notebook will guide us through the following sequence:
+### 5.1 Opening the Notebook
 
-1. **Load the MNIST data.** Read the observations and prepare the inputs and digit labels.
-2. **Initialize the neural network.** Construct the model using the architecture defined in `model.py`.
-3. **Create mini-batches.** Divide the training observations into smaller groups for parameter updates.
-4. **Train the network.** Compute predictions, evaluate the loss, perform backpropagation, and update the parameters.
-5. **Evaluate predictions.** Examine how well the trained network predicts handwritten digits.
-6. **Save the results.** Store the relevant model outputs for future reference.
+In the VS Code Explorer, open:
 
-During training, we will focus on the following PyTorch operations:
+```text
+MNIST_Example.ipynb
+```
+
+The notebook contains the code needed to load the MNIST dataset, initialize the model, train the neural network, and evaluate its predictions.
+
+We will execute the notebook one cell at a time to better understand each step.
+
+### 5.2 Understanding the Training Procedure
+
+The notebook is organized around the following operations:
+
+1. **Loading the data:** Read the MNIST observations and prepare the inputs and digit labels.
+2. **Initializing the network:** Construct the one-hidden-layer model defined in `model.py`.
+3. **Creating mini-batches:** Divide the training observations into smaller groups.
+4. **Training the network:** Calculate predictions, evaluate the loss, and update the parameters.
+5. **Evaluating predictions:** Examine how well the trained network predicts handwritten digits.
+6. **Saving the results:** Store the relevant outputs from the training procedure.
+
+The central training procedure follows the structure:
 
 ```python
 optimizer.zero_grad()
@@ -306,96 +295,97 @@ loss.backward()
 optimizer.step()
 ```
 
-These operations correspond directly to the forward pass, loss calculation, backpropagation, and parameter updates discussed in the lecture.
+These operations correspond directly to the concepts introduced in the lecture:
 
-The complete example will be executed through `MNIST_Example.ipynb`, allowing students to examine each stage individually.
+- `optimizer.zero_grad()` clears previously calculated gradients.
+- `model(x_batch)` performs the forward pass.
+- `loss_fn(...)` evaluates the loss function.
+- `loss.backward()` applies backpropagation to calculate gradients.
+- `optimizer.step()` updates the model parameters.
+
+### 5.3 Executing the Notebook
+
+To run the example:
+
+1. Begin with the first code cell in `MNIST_Example.ipynb`.
+2. Press `Shift + Enter` to execute the current cell and move to the next.
+3. Continue executing the cells in order.
+4. Examine the outputs as the neural network is trained and evaluated.
+
+Alternatively, you may select **Run All** at the top of the notebook to execute every cell.
+
+Training time will depend on your computer and the model parameters.
+
+### 5.4 Examining Your Results
+
+Once training is complete, examine the outputs produced by the notebook.
+
+Depending on the saved outputs, these may include:
+
+- Training loss across epochs.
+- Predicted handwritten digits.
+- Comparisons between predicted and observed labels.
+- Summaries of predictive performance.
+
+The notebook will save the designated outputs to a folder named:
+
+```text
+results/
+```
+
+This folder is intentionally excluded from GitHub using `.gitignore`, so each student must execute the notebook to generate their own results.
+
+The saved outputs allow you to inspect the results after training without repeating the entire procedure.
 
 ---
 
-## Section 6: Saving Your Work with Git and GitHub
+## Section 6: Using Git to Save Your Work
 
-Once we have successfully trained our neural network, we will briefly demonstrate how to save the project using Git and GitHub.
+Git allows us to track changes to our project and save versions of our code.
 
-Git tracks changes to files locally, while GitHub provides an online location where repositories can be stored and shared.
+Because we cloned an existing repository, Git is already initialized in the downloaded project folder.
 
-### 6.1 Initializing a Git Repository
+### 6.1 Checking Your Repository
 
-Open the VS Code terminal inside your project folder and enter:
+Open the VS Code terminal and enter:
 
 ```bash
-git init
+git status
 ```
 
-This initializes a local Git repository.
+This command displays any tracked files that have been modified.
 
-Before adding files, make sure `.gitignore` contains:
+### 6.2 Saving Changes Locally
 
-```text
-.venv/
-__pycache__/
-.ipynb_checkpoints/
-```
-
-We will also exclude any dataset or generated files that should not be uploaded to GitHub.
-
-### 6.2 Saving Your First Commit
-
-Enter:
+If you make changes to the Python scripts or notebook, you can record them with Git:
 
 ```bash
 git add .
-git commit -m "Initial MNIST neural network example"
+git commit -m "Updated MNIST neural network example"
 ```
 
-If Git requests your name and email address, configure them using the instructions displayed in the terminal.
+This saves a new version of your project locally.
 
-The commit records the current state of your project.
+If Git requests your name and email address, follow the instructions displayed in the terminal to configure them.
 
-### 6.3 Creating a GitHub Repository
+### 6.3 Uploading Your Own Repository
 
-1. Visit https://github.com/
-2. Sign in or create an account.
-3. Select **New repository**.
-4. Give the repository a name, such as `MNIST_NeuralNet_Example`.
-5. Create the repository without adding a second README or `.gitignore`.
+If you would like to save your modified project online, you can create your own GitHub repository.
 
-GitHub will provide a repository URL that we can use to connect our local project.
+Visit https://github.com/ and create a new empty repository.
 
-### 6.4 Uploading the Project
-
-In the VS Code terminal, enter:
+Then connect your local project to your own repository:
 
 ```bash
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/MNIST_NeuralNet_Example.git
+git remote set-url origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
 git push -u origin main
 ```
 
-Replace `YOUR-USERNAME` with your GitHub username and use the actual URL of your new repository.
+Replace the URL with the address of your new GitHub repository.
 
-You may be prompted to authenticate with GitHub.
+The first command changes the remote destination from the classroom repository to your own repository. The second uploads your local `main` branch, including your committed changes.
 
-Once the upload is complete, your project files should be visible in your online repository.
-
-### 6.5 Reproducing the Example on Another Computer
-
-After the repository is published, another student can obtain the code using:
-
-```bash
-git clone https://github.com/YOUR-USERNAME/MNIST_NeuralNet_Example.git
-cd MNIST_NeuralNet_Example
-```
-
-They can then:
-
-1. Open the downloaded folder in VS Code.
-2. Create and select a Python environment as described in Section 4.
-3. Install the packages using `requirements.txt`.
-4. Place the MNIST dataset in the `data/` folder, if it is not included.
-5. Open `MNIST_Example.ipynb`.
-6. Select the correct Python kernel and run the notebook cells in order.
-
-Following these steps should reproduce the training procedure and allow students to obtain their own results.
+The `results/` folder and local Python environment will remain excluded as specified in `.gitignore`.
 
 ---
 
